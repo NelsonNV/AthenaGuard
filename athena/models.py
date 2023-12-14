@@ -7,10 +7,10 @@ class Vugnerabilidad(models.Model):
     solucion = models.TextField()
 
 class Target(models.Model):
-    nombre = models.CharField()
-    ip = models.CharField(max_length='12')
+    nombre = models.CharField(max_length=100)
+    ip = models.CharField(max_length=12)
     descripcion = models.TextField()
 
 class Reporte(models.Model):
-    vugnerabilidad = models.ForeignKey(Vugnerabilidad)
-    target = models.ForeignKey(Target)
+    vugnerabilidad = models.ForeignKey(Vugnerabilidad,on_delete=models.CASCADE)
+    target = models.ForeignKey(Target,on_delete=models.CASCADE)
