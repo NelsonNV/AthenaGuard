@@ -10,7 +10,7 @@ def home(request):
 
 def add_vulnerabilidad(request):
     if request.method == 'POST':
-        form = formVulnerabilidad()
+        form = formVulnerabilidad(request.POST)
         if form.is_valid():
             form.save()
         return redirect('home')
