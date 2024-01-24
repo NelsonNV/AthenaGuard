@@ -1,9 +1,17 @@
 from django.db import models
 
 class Vulnerabilidad(models.Model):
+    CRITICO_CHOICES = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+
+    nombre = models.CharField(max_length=150)
     cve = models.CharField(max_length=50)
     descripcion = models.TextField()
-    critico = models.CharField(max_length=50)
+    critico = models.CharField(max_length=10, choices=CRITICO_CHOICES)
+
     solucion = models.TextField()
 
 class Target(models.Model):
