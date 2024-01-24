@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="{% static 'favicon.svg' %}" type="image/x-icon">
+    <title>AthenaGuard</title>
+</head>
+<body>
+
+    <header>
+        <header class="bg-blue-500 p-4">
+            <nav class="flex justify-between items-center">
+              <div>
+                <a href="#" class="text-white font-bold text-lg">Mi Sitio</a>
+              </div>
+              <div>
+                <a href="{% url 'home' %}" class="text-white hover:text-gray-300 mr-4">Inicio</a>
+                <a href="{% url 'listVuln' %}" class="text-white hover:text-gray-300 mr-4">Vulnerabilidades</a>
+                <a href="#" class="text-white hover:text-gray-300">Contacto</a>
+              </div>
+            </nav>
+          </header>
+          
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-gray-800 text-white p-6">
+        <p>&copy; 2024 Por <a class="text-cyan-500" href="https://www.navarrolabs.cl" target="_blank" rel="noopener noreferrer">Nelson Navarro</a>. Visita mi perfil en <a class="text-cyan-500" href="https://github.com/NelsonNV" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+
+    </footer>
+
+
+</body>
+</html>
