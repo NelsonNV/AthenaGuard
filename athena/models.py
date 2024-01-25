@@ -20,6 +20,6 @@ class Target(models.Model):
     descripcion = models.TextField()
 
 class Reporte(models.Model):
-    vugnerabilidad = models.ForeignKey(Vulnerabilidad,on_delete=models.CASCADE)
+    vulnerabilidad = models.ForeignKey(Vulnerabilidad,on_delete=models.CASCADE)
     target = models.ForeignKey(Target,on_delete=models.CASCADE)
     osbercacion = models.TextField()
