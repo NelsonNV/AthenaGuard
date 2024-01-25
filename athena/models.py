@@ -13,11 +13,14 @@ class Vulnerabilidad(models.Model):
     critico = models.CharField(max_length=10, choices=CRITICO_CHOICES)
 
     solucion = models.TextField()
-
+    def __str__(self):
+        return self.nombre
 class Target(models.Model):
     nombre = models.CharField(max_length=100)
     ip = models.CharField(max_length=12)
     descripcion = models.TextField()
+    def __str__(self):
+        return self.nombre
 
 class Reporte(models.Model):
     vulnerabilidad = models.ForeignKey(Vulnerabilidad,on_delete=models.CASCADE)
