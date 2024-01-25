@@ -1,5 +1,5 @@
 from django import forms
-from .models import Vulnerabilidad, Target
+from .models import Reporte, Vulnerabilidad, Target
 
 class formVulnerabilidad(forms.ModelForm):
     class Meta:
@@ -23,3 +23,12 @@ class formTarget(forms.ModelForm):
             'ip':forms.TextInput(attrs={'class': 'sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 m-2 text-black w-80'}),
             'descripcion':forms.TextInput(attrs={'class': 'sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 m-2 text-black w-80'})
         }
+class formReporte(forms.ModelForm):
+    class Meta:
+        model = Reporte
+        fields = ["vulnerabilidad","target","osbercacion"]
+        widgets = {
+            'vulnerabilidad': forms.Select(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
+            'target': forms.Select(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
+            'osbercacion': forms.Textarea(attrs={'class': 'w-1/2 sm:w-full p-4 h-30 m-2 text-black'})
+            }
