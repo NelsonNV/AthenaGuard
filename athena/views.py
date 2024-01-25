@@ -2,8 +2,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
 from django.urls import reverse
-from .forms import formVulnerabilidad
-from .models import Vulnerabilidad
+from .forms import formVulnerabilidad, formTarget
+from .models import Target, Vulnerabilidad
 # Create your views here.
 def home(request):
     return render(request,'home.html')
@@ -43,3 +43,44 @@ def delete_vulnerabilidad(request, id):
     except Exception as e:
         messages.error(request, f'Error al intentar eliminar la vulnerabilidad: {str(e)}')
     return redirect('listVuln')
+
+def add_target(request):
+    if request.method == 'POST':
+        form = formTarget(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('home')
+    else:
+        form = formTarget
+    return render(request, 'formulario.html',{'form':form})
+
+def list_target(request):
+    targ = list(Target.objects.values())
+    headers = [field.verbose_name for field in Target._meta.fields]
+    return render(request, 'listTarget.html', {'values': targ,'headers':headers})
+
+def edit_target(request, id):
+    obj = get_object_or_404(formTarget, id=id)
+    if request.method == "POST":
+        form = formTarget(request.POST,instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = formTarget(instance=obj)
+
+    return render(request, 'formulario.html', {'form': form})
+
+def delete_target(request, id):
+    obj = get_object_or_404(Target, id=id)
+    try:
+        obj.delete()
+        messages.success(request, 'La vulnerabilidad ha sido eliminada con éxito.')
+    except Exception as e:
+        messages.error(request, f'Error al intentar eliminar la vulnerabilidad: {str(e)}')
+    return redirect('listVuln')
+
+def report_target(request, target):
+    infoTarget = get_object_or_404(Target, id=target)
+    infoVuln = Vulnerabilidad.objects.values()
+    return render(request,'reportTarget.html',{'infoTarget':infoTarget,'infoVuln':infoVuln})

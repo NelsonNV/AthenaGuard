@@ -15,7 +15,11 @@ urlpatterns = [
     path('vulneravilidad/list/', list_vulnerabilidad, name='listVuln'),
     path('vulneravilidad/edit/<int:id>/', edit_vulnerabilidad, name='editVuln'),
     path('vulneravilidad/delete/<int:id>/', delete_vulnerabilidad, name='deleteVuln'),
-
+    path('target/add/', add_target, name='addTarg'),
+    path('target/list/', list_target, name='listTarg'),
+    path('target/edit/<int:id>/', edit_target, name='editTarg'),
+    path('target/delete/<int:id>/', delete_target, name='deleteTarg'),
+    path('report/<int:target>/', report_target , name='viewReport'),
 
 ]
 urlpatterns += [
