@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<h1 class="text-4xl font-bold"> Reportes de  {{ infoTarget.name }}</h1>
+<section class="text-center">
+    <div>
+        <p class="text-2xl font-bold">
+            ip: <span class="text-green-500">{{ infoTarget.ip }}</span>
+        </p>
+        <p class="text-gray-500 whitespace-normal dark:text-gray-400">
+        {{ infoTarget.descripcion }}
+        </p>
+    </div>
+
+</section>
+<section>
+
+    <form>   
+        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vulnerabilidades</label>
+        <select multiple  id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            
+            <option selected>----</option>
+            {% for vuln in infoVuln %}
+            <option value="{{ vuln.id }}">{{ vuln.nombre }}</option>
+            {% endfor %}
+        </select>
+        
+        
+    </form>
+</section>
+
+
+{% endblock %}

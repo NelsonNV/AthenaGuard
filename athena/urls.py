@@ -19,6 +19,7 @@ urlpatterns = [
     path('target/list/', list_target, name='listTarg'),
     path('target/edit/<int:id>/', edit_target, name='editTarg'),
     path('target/delete/<int:id>/', delete_target, name='deleteTarg'),
+    path('report/<int:target>/', report_target , name='viewReport'),
 
 ]
 urlpatterns += [

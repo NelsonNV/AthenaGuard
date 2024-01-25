@@ -79,3 +79,8 @@ def delete_target(request, id):
     except Exception as e:
         messages.error(request, f'Error al intentar eliminar la vulnerabilidad: {str(e)}')
     return redirect('listVuln')
+
+def report_target(request, target):
+    infoTarget = get_object_or_404(Target, id=target)
+    infoVuln = Vulnerabilidad.objects.values()
+    return render(request,'reportTarget.html',{'infoTarget':infoTarget,'infoVuln':infoVuln})
