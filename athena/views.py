@@ -2,8 +2,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
 from django.urls import reverse
-from .forms import formVulnerabilidad, formTarget
-from .models import Target, Vulnerabilidad
+from .forms import formVulnerabilidad, formTarget, formReporte
+from .models import Reporte, Target, Vulnerabilidad
 # Create your views here.
 def home(request):
     return render(request,'home.html')
@@ -82,5 +82,11 @@ def delete_target(request, id):
 
 def report_target(request, target):
     infoTarget = get_object_or_404(Target, id=target)
-    infoVuln = Vulnerabilidad.objects.values()
-    return render(request,'reportTarget.html',{'infoTarget':infoTarget,'infoVuln':infoVuln})
+    infoVuln = Reporte.objects.filter(target=target).select_related('vulnerabilidad')
+    if request.method == 'POST':
+        form = formReporte(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = formReporte(initial={'target': infoTarget.id})
+    return render(request,'reportTarget.html',{'infoTarget':infoTarget,'infoVuln':infoVuln,'form':form})
