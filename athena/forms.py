@@ -26,9 +26,9 @@ class formTarget(forms.ModelForm):
 class formReporte(forms.ModelForm):
     class Meta:
         model = Reporte
-        fields = ["vulnerabilidad","target","osbercacion"]
+        fields = ["vulnerabilidad","target","observacion"]
         widgets = {
             'vulnerabilidad': forms.Select(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
             'target': forms.Select(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
-            'osbercacion': forms.Textarea(attrs={'class': 'w-1/2 sm:w-full p-4 h-30 m-2 text-black'})
+            'observacion': forms.Textarea(attrs={'class': 'w-1/2 sm:w-full p-4 h-30 m-2 text-black'})
             }
