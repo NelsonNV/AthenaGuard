@@ -26,3 +26,6 @@ class Reporte(models.Model):
     vulnerabilidad = models.ForeignKey(Vulnerabilidad,on_delete=models.CASCADE)
     target = models.ForeignKey(Target,on_delete=models.CASCADE)
     observacion = models.TextField()
+class Evidencia(models.Model):
+    reporte = models.ForeignKey(Reporte,on_delete=models.CASCADE)
+    evidencia = models.ImageField(upload_to='evidencias/')
