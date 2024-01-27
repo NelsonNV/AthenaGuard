@@ -15,7 +15,7 @@
         {% endif %}
     {% endfor %}
 {% endif %}
-<h1 class="text-4xl font-bold"> Reportes de  {{ infoTarget.name }}</h1>
+<h1 class="text-4xl text-white font-bold"> Reportes de  {{ infoTarget.name }}</h1>
 <section class="text-center text-white">
     <div>
         <p class="text-2xl font-bold">
@@ -30,8 +30,8 @@
 </section>
 <section id="vulnerabilityFound">
         
-    <h2 class="mb-2 text-lg font-semibold text-gray-900">Vulnerabilidad encontrada:</h2>
-    <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">   
+    <h2 class=" text-white mb-2 text-lg font-semibold text-gray-900">Vulnerabilidad encontrada:</h2>
+    <ul class="max-w-md space-y-1 text-white list-disc list-inside dark:text-gray-400">   
     {% for vuln in infoVuln %}
         <li >
             {{vuln.id}} {{ vuln.vulnerabilidad }}: {{ vuln.observacion }}   
@@ -47,7 +47,7 @@
     </ul>
 </section>
 <section class="p-2">
-    <h2 class="mb-2 text-lg font-semibold text-gray-900">Reportar Vulnerabilidad</h2>
+    <h2 class="mb-2 text-lg font-semibold text-white">Reportar Vulnerabilidad</h2>
     <a class="text-white bg-gradient-to-br from-green-600 to-green-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb" href="{% url 'addVuln' %}">Agregar vulnerabilidad</a>
     <form method="post">
         {% csrf_token %}
