@@ -29,3 +29,4 @@ class Reporte(models.Model):
 class Evidencia(models.Model):
     reporte = models.ForeignKey(Reporte,on_delete=models.CASCADE)
     evidencia = models.ImageField(upload_to='evidencias/')
+    descripcion = models.TextField()
