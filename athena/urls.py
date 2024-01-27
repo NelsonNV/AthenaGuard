@@ -23,6 +23,8 @@ urlpatterns = [
     path('target/delete/<int:id>/', delete_target, name='deleteTarg'),
     # Report
     path('report/<int:target>/', report_target , name='viewReport'),
+    path('report/delete/<int:id_target>/<int:id_report>', delete_reporte , name='deleteRepor'),
+    path('report/edit/<int:id_report>/', edit_reporte, name='editRepor'),
 
 ]
 urlpatterns += [

@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
 from django.urls import reverse
-from .forms import formVulnerabilidad, formTarget, formReporte
+from .forms import formEvidencia, formVulnerabilidad, formTarget, formReporte
 from .models import Reporte, Target, Vulnerabilidad
 # Create your views here.
 def home(request):
@@ -90,3 +90,25 @@ def report_target(request, target):
     else:
         form = formReporte(initial={'target': infoTarget.id})
     return render(request,'reportTarget.html',{'infoTarget':infoTarget,'infoVuln':infoVuln,'form':form})
+def edit_reporte(request, id_report):
+    obj = get_object_or_404(Reporte, id=id_report)
+    if request.method == "POST":
+        form = formReporte(request.POST,instance=obj)
+        if form.is_valid():
+            form.save()
+    else:
+        form = formReporte(instance=obj)
+    return render(request,'formulario.html', {'form': form})
+
+def delete_reporte(request,id_target , id_report):
+    print(f"id_report: {id_report}, id_target: {id_target}")
+    reporte = get_object_or_404(Reporte, id=id_report)
+    print(f"reporte: {reporte}")
+    try:
+        reporte.delete()
+        messages.success(request, 'El reporte ha sido eliminado con éxito.')
+    except Exception as e:
+        messages.error(request, f'Error al intentar eliminar el reporte: {str(e)}')
+    print("redirecting to")
+    return redirect('viewReport', target=id_target)
+

@@ -1,15 +1,29 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+                <span class="block sm:inline">{{ message }}</span>
+            </div>
+        {% endif %}
+        {% if message.tags == 'error' %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                <span class="block sm:inline">{{ message }}</span>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 <h1 class="text-4xl font-bold"> Reportes de  {{ infoTarget.name }}</h1>
-<section class="text-center">
+<section class="text-center text-white">
     <div>
         <p class="text-2xl font-bold">
             ip: <span class="text-green-500">{{ infoTarget.ip }}</span>
         </p>
         <p class="text-gray-500 whitespace-normal dark:text-gray-400">
         {{ infoTarget.descripcion }}
+        id :{{ infoTarget.id }}
         </p>
     </div>
 
@@ -20,7 +34,14 @@
     <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">   
     {% for vuln in infoVuln %}
         <li >
-            {{ vuln.vulnerabilidad }}: {{ vuln.observacion }}
+            {{vuln.id}} {{ vuln.vulnerabilidad }}: {{ vuln.observacion }}   
+            <a href="{% url "editRepor"  id_report=vuln.id %}" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                Edit
+            </a>
+            <a href="{% url "deleteRepor" id_target=infoTarget.id id_report=vuln.id %}" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"> 
+                Delete
+            </a>   
+
         </li>
     {% endfor %}
     </ul>
