@@ -112,3 +112,15 @@ def delete_reporte(request,id_target , id_report):
     print("redirecting to")
     return redirect('viewReport', target=id_target)
 
+def add_evidencia(request, id_report):
+    reporte = get_object_or_404(Reporte, pk=id_report)
+
+    if request.method == 'POST':        
+        form = formEvidencia(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        return redirect('viewReport', target=reporte.target.id)
+    else:
+        form = formEvidencia()
+        form.initial['reporte'] = id_report
+    return render(request, 'formulario.html',{'form':form})
