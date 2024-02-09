@@ -36,3 +36,10 @@ class Evidencia(models.Model):
     target = models.ForeignKey(Target,on_delete=models.CASCADE)
     evidencia = models.ImageField(upload_to='evidencias/')
     descripcion = models.TextField()
+class Servicios(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+class Escaneo(models.Model):
+    target = models.ForeignKey(Target,on_delete=models.CASCADE)
+    servicio = models.ForeignKey(Servicios,on_delete=models.CASCADE, null=True, blank=True)
+    puerto = models.IntegerField()
