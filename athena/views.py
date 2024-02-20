@@ -101,15 +101,12 @@ def edit_reporte(request, id_report):
     return render(request,'formulario.html', {'form': form})
 
 def delete_reporte(request,id_target , id_report):
-    print(f"id_report: {id_report}, id_target: {id_target}")
     reporte = get_object_or_404(Reporte, id=id_report)
-    print(f"reporte: {reporte}")
     try:
         reporte.delete()
         messages.success(request, 'El reporte ha sido eliminado con éxito.')
     except Exception as e:
         messages.error(request, f'Error al intentar eliminar el reporte: {str(e)}')
-    print("redirecting to")
     return redirect('viewReport', target=id_target)
 
 def add_evidencia(request, id_report):
