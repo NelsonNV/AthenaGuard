@@ -177,3 +177,36 @@ def delete_servicio(request, id_servicio):
     except Exception as e:
         messages.error(request, f'Error al intentar eliminar el servicio: {str(e)}')
     return redirect('lista_servicios')
+def create_escaneo(request):
+    if request.method == 'POST':
+        form = FormEscaneo(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_escaneos')
+    else:
+        form = FormEscaneo()
+    return render(request, 'formulario.html', {'form': form})
+
+def read_escaneo(request, escaneo_id):
+    escaneo = get_object_or_404(Escaneo, pk=escaneo_id)
+    return render(request, 'detalle_escaneo.html', {'escaneo': escaneo})
+
+def update_escaneo(request, escaneo_id):
+    escaneo = get_object_or_404(Escaneo, pk=escaneo_id)
+    if request.method == 'POST':
+        form = FormEscaneo(request.POST, instance=escaneo)
+        if form.is_valid():
+            form.save()
+            return redirect('detalle_escaneo', escaneo_id=escaneo_id)
+    else:
+        form = FormEscaneo(instance=escaneo)
+    return render(request, 'editar_escaneo.html', {'form': form})
+
+def delete_escaneo(request, id_target, id_escaneo):
+    escaneo = get_object_or_404(Escaneo, pk=id_escaneo)
+    try:
+        escaneo.delete()
+        messages.success(request, 'El escaneo ha sido eliminado con éxito.')
+    except Exception as e:
+        messages.error(request, f'Error al intentar eliminar el escaneo: {str(e)}')
+    return redirect('viewTarget', target=id_target)
