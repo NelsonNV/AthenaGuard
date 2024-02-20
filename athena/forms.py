@@ -36,9 +36,10 @@ class formReporte(forms.ModelForm):
 class formEvidencia(forms.ModelForm):
     class Meta:
         model = Evidencia
-        fields = ["reporte","evidencia","descripcion"]
+        fields = ["etapa","target","evidencia","descripcion"]
         widgets = {
-            'reporte': forms.HiddenInput(),
+            'etapa': forms.Select(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
+            'target': forms.Select(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
             'evidencia': forms.FileInput(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
             'descripcion': forms.TextInput(attrs={'class': 'w-1/2 sm:w-full p-4 h-30 m-2 text-black'})
             }
