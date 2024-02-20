@@ -143,3 +143,37 @@ def delete_evidencia(request, id_target, id_evidencia):
     except Exception as e:
         messages.error(request, f'Error al intentar eliminar la evidencia: {str(e)}')
     return redirect('viewReport', id_target=id_target)
+
+def create_servicio(request):
+    if request.method == 'POST':
+        form = FormServicios(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_servicios')
+    else:
+        form = FormServicios()
+    return render(request, 'formulario.html', {'form': form})
+
+def read_servicio(request, servicio_id):
+    servicio = get_object_or_404(Servicios, pk=servicio_id)
+    return render(request, 'servicios.html', {'servicio': servicio})
+
+def update_servicio(request, servicio_id):
+    servicio = get_object_or_404(Servicios, pk=servicio_id)
+    if request.method == 'POST':
+        form = FormServicios(request.POST, instance=servicio)
+        if form.is_valid():
+            form.save()
+            return redirect('detalle_servicio', servicio_id=servicio_id)
+    else:
+        form = FormServicios(instance=servicio)
+    return render(request, 'editar_servicio.html', {'form': form})
+
+def delete_servicio(request, id_servicio):
+    servicio = get_object_or_404(Servicios, pk=id_servicio)
+    try:
+        servicio.delete()
+        messages.success(request, 'El servicio ha sido eliminado con éxito.')
+    except Exception as e:
+        messages.error(request, f'Error al intentar eliminar el servicio: {str(e)}')
+    return redirect('lista_servicios')
