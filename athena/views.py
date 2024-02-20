@@ -1,9 +1,9 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib import messages
 from django.urls import reverse
-from .forms import formEvidencia, formVulnerabilidad, formTarget, formReporte
-from .models import Reporte, Target, Vulnerabilidad
+from .forms import FormEscaneo, FormServicios, formEvidencia, formVulnerabilidad, formTarget, formReporte
+from .models import Escaneo, Evidencia, Reporte, Servicios, Target, Vulnerabilidad
 # Create your views here.
 def home(request):
     return render(request,'home.html')
@@ -121,3 +121,25 @@ def add_evidencia(request, id_report):
         form = formEvidencia()
         form.initial['reporte'] = id_report
     return render(request, 'formulario.html',{'form':form})
+def edit_evidencia(request, id_evidencia):
+    evidencia = get_object_or_404(Evidencia, pk=id_evidencia)
+    reporte_id = evidencia.reporte.id
+
+    if request.method == 'POST':
+        form = formEvidencia(request.POST, request.FILES, instance=evidencia)
+        if form.is_valid():
+            form.save()
+            return redirect('viewReport', target=reporte_id)
+    else:
+        form = formEvidencia(instance=evidencia)
+
+    return render(request, 'formulario.html', {'form': form, 'id_report': reporte_id})
+
+def delete_evidencia(request, id_target, id_evidencia):
+    evidencia = get_object_or_404(Evidencia, pk=id_evidencia)
+    try:
+        evidencia.delete()
+        messages.success(request, 'La evidencia ha sido eliminada con éxito.')
+    except Exception as e:
+        messages.error(request, f'Error al intentar eliminar la evidencia: {str(e)}')
+    return redirect('viewReport', id_target=id_target)
