@@ -32,7 +32,7 @@ class Evidencia(models.Model):
         ('escaneo', 'Escaneo'),
         ('exploit', 'Exploit'),
     ]
-    etapa = models.CharField(max_length=10, choices=ETAPAS_REPORT)
+    etapa = models.CharField(max_length=15, choices=ETAPAS_REPORT)
     target = models.ForeignKey(Target,on_delete=models.CASCADE)
     evidencia = models.ImageField(upload_to='evidencias/')
     descripcion = models.TextField()
