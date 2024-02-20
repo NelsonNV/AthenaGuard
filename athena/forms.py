@@ -1,5 +1,5 @@
 from django import forms
-from .models import Reporte, Vulnerabilidad, Target, Evidencia
+from .models import Escaneo, Reporte, Vulnerabilidad, Target, Evidencia, Servicios
 
 class formVulnerabilidad(forms.ModelForm):
     class Meta:
@@ -43,3 +43,12 @@ class formEvidencia(forms.ModelForm):
             'evidencia': forms.FileInput(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
             'descripcion': forms.TextInput(attrs={'class': 'w-1/2 sm:w-full p-4 h-30 m-2 text-black'})
             }
+class FormServicios(forms.ModelForm):
+    class Meta:
+        model = Servicios
+        fields = ["nombre","descripcion"]
+
+class FormEscaneo(forms.ModelForm):
+    class Meta:
+        model = Escaneo
+        
