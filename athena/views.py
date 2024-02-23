@@ -149,34 +149,34 @@ def create_servicio(request):
         form = FormServicios(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('lista_servicios')
+            return redirect('listServ')
     else:
         form = FormServicios()
     return render(request, 'formulario.html', {'form': form})
 
-def read_servicio(request, servicio_id):
-    servicio = get_object_or_404(Servicios, pk=servicio_id)
+def list_servicio(request):
+    servicio = Servicios.objects.values()
     return render(request, 'servicios.html', {'servicio': servicio})
 
 def update_servicio(request, servicio_id):
-    servicio = get_object_or_404(Servicios, pk=servicio_id)
+    servicio = get_object_or_404(Servicios, id=servicio_id)
     if request.method == 'POST':
         form = FormServicios(request.POST, instance=servicio)
         if form.is_valid():
             form.save()
-            return redirect('detalle_servicio', servicio_id=servicio_id)
+            return redirect('listServ')
     else:
         form = FormServicios(instance=servicio)
-    return render(request, 'editar_servicio.html', {'form': form})
+    return render(request, 'formulario.html', {'form': form})
 
-def delete_servicio(request, id_servicio):
-    servicio = get_object_or_404(Servicios, pk=id_servicio)
+def delete_servicio(request, servicio_id):
+    servicio = get_object_or_404(Servicios, pk=servicio_id)
     try:
         servicio.delete()
         messages.success(request, 'El servicio ha sido eliminado con éxito.')
     except Exception as e:
         messages.error(request, f'Error al intentar eliminar el servicio: {str(e)}')
-    return redirect('lista_servicios')
+    return redirect('listServ')
 def create_escaneo(request):
     if request.method == 'POST':
         form = FormEscaneo(request.POST)
