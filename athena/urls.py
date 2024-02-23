@@ -26,7 +26,13 @@ urlpatterns = [
     path('report/delete/<int:id_target>/<int:id_report>', delete_reporte , name='deleteRepor'),
     path('report/edit/<int:id_report>/', edit_reporte, name='editRepor'),
     # evidencia
-    path('evidencia/add/<int:id_report>/', add_evidencia, name='addEvidencia')
+
+    #servicios
+    path('servicios/add/', create_servicio, name='addServicio'),
+    path('servicios/list/', list_servicio, name='listServ'),
+    path('servicios/edit/<int:servicio_id>/', update_servicio, name='editServicio'),
+    path('servicios/delete/<int:servicio_id>/', delete_servicio, name='deleteServicio'),
+
 ]
 urlpatterns += [
     re_path(r'^media/(?P<path>.*)$', serve,
