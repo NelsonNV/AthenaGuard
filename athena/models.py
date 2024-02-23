@@ -27,6 +27,19 @@ class Reporte(models.Model):
     target = models.ForeignKey(Target,on_delete=models.CASCADE)
     observacion = models.TextField()
 class Evidencia(models.Model):
-    reporte = models.ForeignKey(Reporte,on_delete=models.CASCADE)
+    ETAPAS_REPORT = [
+        ('reconocimiento', 'Reconocimiento'),
+        ('escaneo', 'Escaneo'),
+        ('exploit', 'Exploit'),
+    ]
+    etapa = models.CharField(max_length=15, choices=ETAPAS_REPORT)
+    target = models.ForeignKey(Target,on_delete=models.CASCADE)
     evidencia = models.ImageField(upload_to='evidencias/')
     descripcion = models.TextField()
+class Servicios(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+class Escaneo(models.Model):
+    target = models.ForeignKey(Target,on_delete=models.CASCADE)
+    servicio = models.ForeignKey(Servicios,on_delete=models.CASCADE, null=True, blank=True)
+    puerto = models.IntegerField()

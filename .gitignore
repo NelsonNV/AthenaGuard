@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/virtualenv,django,python,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=virtualenv,django,python,visualstudiocode
 
+### Visual Studio #
+.vscode
+
 ### Django ###
 *.log
 *.pot
