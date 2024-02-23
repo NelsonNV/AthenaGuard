@@ -9,28 +9,44 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" href="{% static 'favicon.svg' %}" type="image/x-icon">
   <link rel="stylesheet" href="{% static 'athena.css' %}">
+  <script src="{% static 'athena.js' %}"></script>
   <title>AthenaGuard</title>
 </head>
 
 <body>
 
-    <header>
-      <nav class="flex justify-between items-center">
-        <div class="logo flex justify-between items-center gap-2">
-          <img src="{% static 'favicon.svg' %}" alt="logo">
-          <a href="#" class="text-white font-bold text-lg">Athena</a>
-        </div>
-        <div class="nav-links">
-          <a href="{% url 'home' %}" >Inicio</a>
+  <header>
+    <nav class="flex justify-between items-center">
+      <div class="logo flex justify-between items-center gap-2">
+        <img src="{% static 'favicon.svg' %}" alt="logo">
+        <a href="#" class="text-white font-bold text-lg">Athena</a>
+      </div>
+
+      <div class="nav-links">
+        <a href="{% url 'home' %}">Inicio</a>
+        <a href="{% url 'listVuln' %}">Vulnerabilidades</a>
+        <a href="{% url 'listTarg' %}">Target</a>
+      </div>
+
+      <div class="nav-drop-menu">
+
+        <button onclick="fn_menuResponsive()" class="boton-drop">Menu</button>
+
+        <div id="nav-drop" class="nav-elements">
+          <a href="{% url 'home' %}">Inicio</a>
           <a href="{% url 'listVuln' %}">Vulnerabilidades</a>
           <a href="{% url 'listTarg' %}">Target</a>
           <a href="{% url 'listServ' %}">Servicios</a>
         </div>
-      </nav>
-    </header>
+        
+      </div>
+
+    </nav>
+  </header>
 
 
   <main>
+
 {% if messages %}
     {% for message in messages %}
         {% if message.tags == 'success' %}
@@ -46,8 +62,18 @@
     {% endfor %}
 {% endif %}
 
+
     {% block content %}{% endblock %}
+
+
+
   </main>
+
+
+
+
+
+
 
   <footer class="bg-gray-900 text-white p-6">
     <p>&copy; 2024 Por <a class="text-cyan-500" href="https://www.navarrolabs.cl" target="_blank"
