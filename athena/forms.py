@@ -51,4 +51,5 @@ class FormServicios(forms.ModelForm):
 class FormEscaneo(forms.ModelForm):
     class Meta:
         model = Escaneo
+        fields = ['target','servicio','puerto']
         
