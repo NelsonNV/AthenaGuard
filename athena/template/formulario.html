@@ -2,9 +2,6 @@
 {% load static %}
 {% block content %}
 
-    <h1>Agregar Pregunta</h1>
-
-
     <form method="post" class=" flex flex-wrap bg-gray-600 p-5 text-white justify-center items-center ">
         {% csrf_token %}
         {{ form }}
