@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<ul class="divide-y divide-gray-200">
+    {% for s in servicio %}
+        <li class="py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <span class="font-semibold">{{ s.nombre }}</span>
+                    <span class="text-gray-500 ml-2">{{ s.descripcion }}</span>
+                </div>
+                <div class="flex items-center">
+                    <a href="{% url 'editServicio' servicio_id=s.id %}" class="text-indigo-600 hover:text-indigo-900 mr-2">Editar</a>
+                    <a href="{% url 'deleteServicio' servicio_id=s.id %}" class="text-red-600 hover:text-red-900">Eliminar</a>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}
