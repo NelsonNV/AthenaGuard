@@ -60,7 +60,7 @@ def list_target(request):
     return render(request, 'listTarget.html', {'values': targ,'headers':headers})
 
 def edit_target(request, id):
-    obj = get_object_or_404(formTarget, id=id)
+    obj = get_object_or_404(Target, id=id)
     if request.method == "POST":
         form = formTarget(request.POST,instance=obj)
         if form.is_valid():
