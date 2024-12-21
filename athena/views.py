@@ -83,13 +83,14 @@ def delete_target(request, id):
 def report_target(request, target):
     infoTarget = get_object_or_404(Target, id=target)
     infoVuln = Reporte.objects.filter(target=target).select_related('vulnerabilidad')
+    infoEscan = Escaneo.objects.filter(target=target)
     if request.method == 'POST':
         form = formReporte(request.POST)
         if form.is_valid():
             form.save()
     else:
         form = formReporte(initial={'target': infoTarget.id})
-    return render(request,'reportTarget.html',{'infoTarget':infoTarget,'infoVuln':infoVuln,'form':form})
+    return render(request,'reportTarget.html',{'infoTarget':infoTarget,'infoVuln':infoVuln,'form':form, "infoScan":infoEscan})
 def edit_reporte(request, id_report):
     obj = get_object_or_404(Reporte, id=id_report)
     if request.method == "POST":
@@ -177,14 +178,14 @@ def delete_servicio(request, servicio_id):
     except Exception as e:
         messages.error(request, f'Error al intentar eliminar el servicio: {str(e)}')
     return redirect('listServ')
-def create_escaneo(request):
+def create_escaneo(request,escaneo_id=None):
     if request.method == 'POST':
         form = FormEscaneo(request.POST)
         if form.is_valid():
             form.save()
             return redirect('lista_escaneos')
     else:
-        form = FormEscaneo()
+        form = FormEscaneo(initial={'target':escaneo_id})
     return render(request, 'formulario.html', {'form': form})
 
 def read_escaneo(request, escaneo_id):

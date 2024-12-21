@@ -19,6 +19,31 @@
         </p>
     </div>
 </section>
+<!-- Escaneos -->
+<section id="escaneo" class="mb-6">
+    <h2 class="text-lg font-semibold text-white mb-4">Escaneos:</h2>
+    {% render_url_button "Nuevo Escaneo" url="createEscanId" color="green" additional_classes="mb-4 inline-block" escaneo_id=infoTarget.id %}
+    <ol class="max-w-md space-y-4 text-white list-decimal list-inside dark:text-gray-400">
+        {% for scan in infoScan %}
+        <li class="flex space-x-4 mt-2 items-start">
+            <span class="flex-shrink-0 font-bold text-purple-500 bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center">
+                {{ forloop.counter }}
+            </span>
+            <p class="ml-5">
+                <span class="font-bold">{{ scan.servicio.nombre }}</span>: {{ scan.puerto }}
+ 
+                {{ scan.servicio.descripcion }}
+            </p>
+            <div class="flex space-x-4 mt-2">
+                {% render_url_button "Editar" url="editEscan" id_scan=scan.id color="purple" %}
+                {% render_url_button "Eliminar" url="deleteEscan" id_target=infoTarget.id id_scan=scan.id color="red" %}
+            </div>
+        </li>
+        {% empty %}
+        <li class="text-gray-400">No se encontraron escaneos.</li>
+        {% endfor %}
+    </ol>
+</section>
 
 <!-- Vulnerabilidades Encontradas -->
 <section id="vulnerabilityFound" class="mb-6">

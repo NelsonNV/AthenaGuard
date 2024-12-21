@@ -27,6 +27,12 @@ urlpatterns = [
     path('report/edit/<int:id_report>/', edit_reporte, name='editRepor'),
     # evidencia
 
+    #escaneo
+    path('escaneo/add/', create_escaneo, name='createEscan'),
+    path('escaneo/add/<int:escaneo_id>/', create_escaneo, name='createEscanId'),
+    path('escaneo/read/<int:escaneo_id>/', read_escaneo, name='readEscan'),
+    path('escaneo/edit/<int:escaneo_id>/', update_escaneo, name='editEscan'),
+
     #servicios
     path('servicios/add/', create_servicio, name='addServicio'),
     path('servicios/list/', list_servicio, name='listServ'),
