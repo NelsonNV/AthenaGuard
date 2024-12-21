@@ -23,23 +23,25 @@
 <!-- Vulnerabilidades Encontradas -->
 <section id="vulnerabilityFound" class="mb-6">
     <h2 class="text-lg font-semibold text-white mb-4">Vulnerabilidades Encontradas:</h2>
-    <ul class="max-w-md space-y-4 text-white list-disc list-inside dark:text-gray-400">
+    <ol class="max-w-md space-y-4 text-white list-decimal list-inside dark:text-gray-400">
         {% for vuln in infoVuln %}
-        <li>
-            <p>
-            <span class="font-bold">{{}} {{ vuln.vulnerabilidad.cve }} {{ vuln.vulnerabilidad }}:</span> {{ vuln.observacion }}
+        <li class="flex space-x-4 mt-2 items-start">
+            <span class="flex-shrink-0 font-bold text-purple-500 bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center">
+                {{ forloop.counter }}
+            </span>
+            <p class="ml-4">
+                <span class="font-bold">{{ vuln.vulnerabilidad.cve }} {{ vuln.vulnerabilidad }}:</span> {{ vuln.observacion }}
             </p>
 
-<div class="flex space-x-4 mt-2">
-    {% render_url_button "Editar" url="editRepor" id_report=vuln.id color="purple" %}
-    {% render_url_button "Eliminar" url="deleteRepor" id_target=infoTarget.id id_report=vuln.id color="red" %}
-</div>
-
+            <div class="flex space-x-4 mt-2">
+                {% render_url_button "Editar" url="editRepor" id_report=vuln.id color="purple" %}
+                {% render_url_button "Eliminar" url="deleteRepor" id_target=infoTarget.id id_report=vuln.id color="red" %}
+            </div>
         </li>
         {% empty %}
         <li class="text-gray-400">No se encontraron vulnerabilidades.</li>
         {% endfor %}
-    </ul>
+    </ol>
 </section>
 
 <!-- Formulario para Reportar Vulnerabilidad -->
