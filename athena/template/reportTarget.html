@@ -1,47 +1,62 @@
 {% extends "base.html" %}
 {% load static %}
+{% load buttons %}
 {% block content %}
-<h1 class="text-4xl text-white font-bold"> Reportes de  {{ infoTarget.name }}</h1>
-<section class="text-center text-white">
+
+<h1 class="text-4xl text-white font-bold mb-4">Reportes de {{ infoTarget.name }}</h1>
+
+<!-- Información del Target -->
+<section class="text-center text-white mb-6">
     <div>
         <p class="text-2xl font-bold">
-            ip: <span class="text-green-500">{{ infoTarget.ip }}</span>
+            IP: <span class="text-green-500">{{ infoTarget.ip }}</span>
         </p>
         <p class="text-gray-500 whitespace-normal dark:text-gray-400">
-        {{ infoTarget.descripcion }}
-        id :{{ infoTarget.id }}
+            {{ infoTarget.descripcion }}
+        </p>
+        <p class="text-gray-500 whitespace-normal dark:text-gray-400">
+            ID: <span class="font-bold">{{ infoTarget.id }}</span>
         </p>
     </div>
-
 </section>
-<section id="vulnerabilityFound">
-        
-    <h2 class=" text-white mb-2 text-lg font-semibold text-gray-900">Vulnerabilidad encontrada:</h2>
-    <ul class="max-w-md space-y-1 text-white list-disc list-inside dark:text-gray-400">   
-    {% for vuln in infoVuln %}
-        <li >
-            {{vuln.id}} {{ vuln.vulnerabilidad }}: {{ vuln.observacion }}   
-            <a href="{% url "editRepor"  id_report=vuln.id %}" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                Edit
-            </a>
-            <a href="{% url "deleteRepor" id_target=infoTarget.id id_report=vuln.id %}" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"> 
-                Delete
-            </a>   
+
+<!-- Vulnerabilidades Encontradas -->
+<section id="vulnerabilityFound" class="mb-6">
+    <h2 class="text-lg font-semibold text-white mb-4">Vulnerabilidades Encontradas:</h2>
+    <ul class="max-w-md space-y-4 text-white list-disc list-inside dark:text-gray-400">
+        {% for vuln in infoVuln %}
+        <li>
+            <p>
+            <span class="font-bold">{{}} {{ vuln.vulnerabilidad.cve }} {{ vuln.vulnerabilidad }}:</span> {{ vuln.observacion }}
+            </p>
+
+<div class="flex space-x-4 mt-2">
+    {% render_url_button "Editar" url="editRepor" id_report=vuln.id color="purple" %}
+    {% render_url_button "Eliminar" url="deleteRepor" id_target=infoTarget.id id_report=vuln.id color="red" %}
+</div>
 
         </li>
-    {% endfor %}
+        {% empty %}
+        <li class="text-gray-400">No se encontraron vulnerabilidades.</li>
+        {% endfor %}
     </ul>
 </section>
-<section class="p-2">
-    <h2 class="mb-2 text-lg font-semibold text-white">Reportar Vulnerabilidad</h2>
-    <a class="text-white bg-gradient-to-br from-green-600 to-green-800 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb" href="{% url 'addVuln' %}">Agregar vulnerabilidad</a>
-    <form method="post">
+
+<!-- Formulario para Reportar Vulnerabilidad -->
+<section class="p-4 bg-gray-800 rounded-lg shadow-lg">
+    <h2 class="mb-4 text-lg font-semibold text-white">Reportar Vulnerabilidad</h2>
+{% render_url_button "Agregar Vulnerabilidad" url="addVuln" color="green" additional_classes="mb-4 inline-block" %}
+    <form method="post" class="space-y-4">
         {% csrf_token %}
-        {{ form }}
-        <button class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb" type="submit">enviar</button>
-        <button class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb"  type="reset">Limpiar</button>
+        <div class="space-y-4">
+            {{ form }}
+        </div>
+
+        <div class="flex space-x-4">
+            {% render_button "Enviar" "submit" color="purple" %}
+            {% render_button "Limpiar" "reset" color="gray" %}
+        </div>
     </form>
 </section>
-
 
 {% endblock %}
