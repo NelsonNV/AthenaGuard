@@ -8,7 +8,7 @@ class CustomForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             if not field.label:
                 field.label = field_name.replace("_", " ").capitalize()
-            field.label_tag = lambda label: f'<label class="block font-medium text-gray-600 mb-2">{label}</label>'
+            field.widget.attrs['class'] = field.widget.attrs.get('class', '') + ' block font-medium text-gray-600 mb-2'
 
 class formVulnerabilidad(CustomForm):
     class Meta:
