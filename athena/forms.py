@@ -1,55 +1,92 @@
 from django import forms
 from .models import Escaneo, Reporte, Vulnerabilidad, Target, Evidencia, Servicios
 
-class formVulnerabilidad(forms.ModelForm):
+
+class CustomForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if not field.label:
+                field.label = field_name.replace("_", " ").capitalize()
+            field.label_tag = lambda label: f'<label class="block font-medium text-gray-600 mb-2">{label}</label>'
+
+class formVulnerabilidad(CustomForm):
     class Meta:
         model = Vulnerabilidad
-        fields = ["nombre","cve","critico","descripcion","solucion"]
-        CHOICES = ['leve','medio','HIGH']
-        widgets = { 
-            'nombre': forms.TextInput(attrs={'class': 'sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 m-2 text-black w-80'}),
-            'critico': forms.Select(attrs={'class': 'sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 m-2 text-black'}),
-            'cve': forms.TextInput(attrs={'class': 'sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 m-2 h-10 text-black'}),
-            'solucion': forms.Textarea(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
-            'descripcion': forms.Textarea(attrs={'class': 'w-1/2 sm:w-full p-4 h-30 m-2 text-black'}),
+        fields = ["nombre", "cve", "critico", "descripcion", "solucion"]
+        labels = {
+            'nombre': 'Nombre de la Vulnerabilidad',
+            'cve': 'Código CVE',
+            'critico': 'Nivel Crítico',
+            'descripcion': 'Descripción Detallada',
+            'solucion': 'Solución Propuesta',
+        }
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'critico': forms.Select(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'cve': forms.TextInput(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'solucion': forms.Textarea(attrs={'class': 'w-full max-w-lg p-2 m-2 border rounded text-gray-800'}),
+            'descripcion': forms.Textarea(attrs={'class': 'w-full max-w-lg p-2 m-2 border rounded text-gray-800'}),
         }
 
-class formTarget(forms.ModelForm):
+class formTarget(CustomForm):
+
     class Meta:
         model = Target
         fields =["nombre","ip","descripcion"]
-        widgets = {
-            'nombre':forms.TextInput(attrs={'class': 'sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 m-2 text-black w-80'}),
-            'ip':forms.TextInput(attrs={'class': 'sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 m-2 text-black w-80'}),
-            'descripcion':forms.TextInput(attrs={'class': 'sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 m-2 text-black w-80'})
+        labels = {
+            'nombre': 'Nombre del Target',
+            'ip': 'IP del Target',
+            'descripcion': 'Descripción Detallada',
         }
-class formReporte(forms.ModelForm):
+
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'ip': forms.TextInput(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'descripcion': forms.TextInput(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+        }
+
+class formReporte(CustomForm):
     class Meta:
         model = Reporte
         fields = ["vulnerabilidad","target","observacion"]
+        labels = {
+            'vulnerabilidad': 'Vulnerabilidad',
+            'target': 'Target',
+            'observacion': 'Observaciones',
+        }
         widgets = {
-            'vulnerabilidad': forms.Select(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
-            'target': forms.Select(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
-            'observacion': forms.Textarea(attrs={'class': 'w-1/2 sm:w-full p-4 h-30 m-2 text-black'})
-            }
+            'vulnerabilidad': forms.Select(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'target': forms.Select(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'observacion': forms.Textarea(attrs={'class': 'w-full max-w-lg p-2 m-2 border rounded text-gray-800'}),
+        }
 
-class formEvidencia(forms.ModelForm):
+class formEvidencia(CustomForm):
     class Meta:
         model = Evidencia
-        fields = ["etapa","target","evidencia","descripcion"]
+        fields = ["etapa", "target", "evidencia", "descripcion"]
         widgets = {
-            'etapa': forms.Select(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
-            'target': forms.Select(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
-            'evidencia': forms.FileInput(attrs={'class': 'w-1/2 sm:w-full p-4 h-20 m-2 text-black'}),
-            'descripcion': forms.TextInput(attrs={'class': 'w-1/2 sm:w-full p-4 h-30 m-2 text-black'})
-            }
-class FormServicios(forms.ModelForm):
+            'etapa': forms.Select(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'target': forms.Select(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'evidencia': forms.FileInput(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'descripcion': forms.TextInput(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+        }
+
+class FormServicios(CustomForm):
     class Meta:
         model = Servicios
-        fields = ["nombre","descripcion"]
+        fields = ["nombre", "descripcion"]
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'descripcion': forms.TextInput(attrs={'class': 'w-full max-w-lg p-2 m-2 border rounded text-gray-800'}),
+        }
 
-class FormEscaneo(forms.ModelForm):
+class FormEscaneo(CustomForm):
     class Meta:
         model = Escaneo
-        fields = ['target','servicio','puerto']
-        
+        fields = ['target', 'servicio', 'puerto']
+        widgets = {
+            'target': forms.Select(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'servicio': forms.Select(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+            'puerto': forms.NumberInput(attrs={'class': 'w-full max-w-md p-2 m-2 border rounded text-gray-800'}),
+        }
