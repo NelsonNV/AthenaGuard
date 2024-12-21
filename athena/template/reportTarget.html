@@ -50,7 +50,7 @@
 {% render_url_button "Agregar Vulnerabilidad" url="addVuln" color="green" additional_classes="mb-4 inline-block" %}
     <form method="post" class="space-y-4">
         {% csrf_token %}
-        <div class="space-y-4">
+        <div class="space-y-4 text-white">
             {{ form }}
         </div>
 
