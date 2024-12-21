@@ -32,3 +32,32 @@ def render_button(text, button_type="button", color="purple", additional_classes
     </button>
     """
     return mark_safe(button_html)
+
+
+
+
+@register.simple_tag
+def render_url_button(text, url=None, color="blue", additional_classes="", **kwargs):
+    from django.urls import reverse, NoReverseMatch
+
+    # Filtrar solo los argumentos necesarios para reverse
+    url_kwargs = {k: v for k, v in kwargs.items() if not k in ["color", "additional_classes"]}
+
+    try:
+        if not url:
+            raise ValueError("El parámetro 'url' es obligatorio y no puede ser vacío.")
+        href = reverse(url, kwargs=url_kwargs)
+    except (NoReverseMatch, ValueError) as e:
+        print(f"Error en render_url_button: {e}")
+        href = "#"
+
+    button_html = f"""
+    <a href="{href}"
+       class="text-white bg-gradient-to-br from-{color}-600 to-{color}-800 hover:bg-gradient-to-bl
+              focus:ring-4 focus:outline-none focus:ring-{color}-300 dark:focus:ring-{color}-800
+              font-medium rounded-lg text-sm px-5 py-2.5 {additional_classes}">
+        {text}
+    </a>
+    """
+    return mark_safe(button_html)
+
