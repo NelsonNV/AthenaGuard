@@ -3,16 +3,14 @@
 
 {% block content %}
 
-<figure>
-
-    <img src="{% static 'favicon.svg' %}" alt="logo">
-    <h1>AthenaGuard</h1>
-    <figcaption>AthenaGuard es una pagina para ayudar a quienes estudian seguridad informatia o ya trabajan en esta area para lograr el automatizar los informes y facilitar el entender los procesos de los CTF, este proyecto es Open source, si quieres cambiar algo o piensas que hay una mejor forma de plantear los datos puedes sin problema mandar tu pull request y lo revisare con cuidado</figcaption>
-
+<figure class="flex flex-col items-center justify-center gap-3 text-white">
+    <img src="{% static 'favicon.svg' %}" alt="logo" class="size-52">
+    <h1 class="text-3xl font-bold text-sky-500">AthenaGuard</h1>
+    <figcaption class="text-white lg:text-center lg:w-1/2 md:w-auto ">
+        AthenaGuard es una página para ayudar a quienes estudian seguridad informática o ya trabajan en esta área,
+        para automatizar los informes y facilitar el entendimiento de los procesos de los CTF. Este proyecto es Open Source,
+        si quieres cambiar algo o piensas que hay una mejor forma de plantear los datos, puedes sin problema mandar tu pull request y lo revisaré con cuidado.
+    </figcaption>
 </figure>
-
-
-
-
 
 {% endblock %}
