@@ -36,19 +36,6 @@ footer{
 
 /* -- Navbar -- */
 
-.logo {
-    border-radius: 20px;
-    border: 2px solid #0ea5e9;
-    padding: 5px 10px;
-
-    transition: background-color 0.3s ease;
-}
-
-.logo:hover {
-    background-color: #036aa171;
-
-}
-
 .nav-links {
     display: flex;
     flex-flow: row;
